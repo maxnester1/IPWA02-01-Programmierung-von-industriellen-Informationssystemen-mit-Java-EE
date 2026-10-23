@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+
+    <Resource id="My DataSource" type="DataSource">
+        JdbcDriver com.mysql.cj.jdbc.Driver
+        JdbcUrl jdbc:mysql://localhost:3306/ghostnet_db
+        UserName root
+        Password
+        JtaManaged true
+
+        Lazy true
+        UseAppClassLoader true
+        InitializeAfterDeployment true
+    </Resource>
+
+    <Resource id="My Unmanaged DataSource" type="DataSource">
+        JdbcDriver com.mysql.cj.jdbc.Driver
+        JdbcUrl jdbc:mysql://localhost:3306/ghostnet_db
+        UserName root
+        Password
+        JtaManaged false
+
+        Lazy true
+        UseAppClassLoader true
+        InitializeAfterDeployment true
+    </Resource>
+
+</resources>

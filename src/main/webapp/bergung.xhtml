@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+
+    <title>Ghost Net Fishing - Bergung</title>
+
+    <style>
+
+        * {
+
+            box-sizing: border-box;
+
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background-color: #eef4f8;
+
+            color: #1f2933;
+
+        }
+
+        .header {
+
+            background-color: #0b3954;
+
+            color: white;
+
+            padding: 22px 40px;
+
+        }
+
+        .header-content {
+
+            max-width: 1300px;
+
+            margin: auto;
+
+        }
+
+        .header h1 {
+
+            margin: 0;
+
+            font-size: 28px;
+
+        }
+
+        .header p {
+
+            margin: 6px 0 0;
+
+            color: #c9dce8;
+
+        }
+
+        .container {
+
+            max-width: 1400px;
+
+            margin: 20px auto;
+
+            padding: 0 20px;
+
+        }
+
+        .card {
+
+            background-color: white;
+
+            padding: 35px;
+
+            border-radius: 15px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+        }
+
+        h2 {
+
+            margin-top: 0;
+
+            color: #0b3954;
+
+        }
+
+        h3 {
+
+            margin-top: 0;
+
+            color: #0b3954;
+
+        }
+
+        .description {
+
+            color: #52616b;
+
+            line-height: 1.5;
+
+            margin-bottom: 25px;
+
+        }
+
+        .warning {
+
+            color: #9b2c1d;
+
+            font-weight: bold;
+
+            margin-bottom: 18px;
+
+        }
+
+        .person-data {
+
+            background-color: #f3f7fa;
+
+            padding: 24px;
+
+            border-radius: 12px;
+
+            margin-bottom: 25px;
+
+        }
+
+        .person-fields {
+
+            display: flex;
+
+            gap: 30px;
+
+            align-items: flex-start;
+
+        }
+
+        .field {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+        .field label {
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+        }
+
+        input[type="text"] {
+
+            padding: 11px 12px;
+
+            border: 1px solid #c5cdd3;
+
+            border-radius: 7px;
+
+            width: 315px;
+
+            font-size: 16px;
+
+        }
+
+        input[type="text"]:focus {
+
+            outline: none;
+
+            border-color: #0b6e99;
+
+        }
+
+        .netze {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 15px;
+
+            background-color: white;
+
+        }
+
+        .netze th {
+
+            background-color: #0b3954;
+
+            color: white;
+
+            text-align: left;
+
+            padding: 15px 14px;
+
+        }
+
+        .netze td {
+
+            border-bottom: 1px solid #e0e5e8;
+
+            padding: 15px 14px;
+
+        }
+
+        .netze tr:hover {
+
+            background-color: #f5f9fb;
+
+        }
+
+        .button {
+
+            padding: 11px 16px;
+
+            background-color: #0b6e99;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+        }
+
+        .button:hover {
+
+            background-color: #095a7d;
+
+        }
+
+        .actions {
+
+            display: flex;
+
+            gap: 12px;
+
+            align-items: center;
+
+        }
+
+        .back {
+
+            display: inline-block;
+
+            margin-top: 28px;
+
+            color: #0b6e99;
+
+            text-decoration: none;
+
+        }
+
+        .back:hover {
+
+            text-decoration: underline;
+
+        }
+
+        .footer {
+
+            text-align: center;
+
+            padding: 20px;
+
+            color: #71808c;
+
+            font-size: 13px;
+
+        }
+
+    </style>
+
+</h:head>
+
+<h:body>
+
+    <div class="header">
+
+        <div class="header-content">
+
+            <h1>Ghost Net Fishing</h1>
+
+            <p>Geisternetze melden und Bergungen koordinieren</p>
+
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>Geisternetze zur Bergung</h2>
+
+            <p class="description">
+
+                Hier werden alle Geisternetze angezeigt, die noch nicht
+                geborgen oder als verschollen gemeldet wurden.
+
+            </p>
+
+            <h:panelGroup rendered="#{ghostNetBean.verschollenFehler}">
+
+                <p class="warning">
+
+                    Ein Geisternetz kann nicht anonym als verschollen gemeldet werden.
+                    Bitte Name und Telefonnummer angeben.
+
+                </p>
+
+            </h:panelGroup>
+
+            <h:form>
+
+                <div class="person-data">
+
+                    <h3>Bergung übernehmen oder als geborgen melden</h3>
+
+                    <p class="description">
+
+                        Name und Telefonnummer werden benötigt, um eine Bergung
+                        zu übernehmen oder ein Geisternetz als geborgen zu melden.
+
+                    </p>
+
+                    <div class="person-fields">
+
+                        <div class="field">
+
+                            <h:outputLabel
+                                    for="name"
+                                    value="Name:" />
+
+                            <h:inputText
+                                    id="name"
+                                    value="#{ghostNetBean.bergendeName}" />
+
+                        </div>
+
+                        <div class="field">
+
+                            <h:outputLabel
+                                    for="telefon"
+                                    value="Telefonnummer:" />
+
+                            <h:inputText
+                                    id="telefon"
+                                    value="#{ghostNetBean.bergendeTelefon}" />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="person-data">
+
+                    <h3>Geisternetz als verschollen melden</h3>
+
+                    <p class="description">
+
+                        Um ein Geisternetz als verschollen zu melden, müssen Name und Telefonnummer
+                        angegeben werden.
+
+                    </p>
+
+                    <div class="person-fields">
+
+                        <div class="field">
+
+                            <h:outputLabel
+                                    for="verschollenName"
+                                    value="Name:" />
+
+                            <h:inputText
+                                    id="verschollenName"
+                                    value="#{ghostNetBean.verschollenName}" />
+
+                        </div>
+
+                        <div class="field">
+
+                            <h:outputLabel
+                                    for="verschollenTelefon"
+                                    value="Telefonnummer:" />
+
+                            <h:inputText
+                                    id="verschollenTelefon"
+                                    value="#{ghostNetBean.verschollenTelefon}" />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <h2>Verfügbare Geisternetze</h2>
+
+                <h:dataTable
+                        value="#{ghostNetBean.gemeldeteNetze}"
+                        var="netz"
+                        styleClass="netze">
+
+                    <h:column>
+
+                        <f:facet name="header">
+
+                            ID
+
+                        </f:facet>
+
+                        #{netz.id}
+
+                    </h:column>
+
+                    <h:column>
+
+                        <f:facet name="header">
+
+                            Breitengrad
+
+                        </f:facet>
+
+                        #{netz.latitude}
+
+                    </h:column>
+
+                    <h:column>
+
+                        <f:facet name="header">
+
+                            Längengrad
+
+                        </f:facet>
+
+                        #{netz.longitude}
+
+                    </h:column>
+
+                    <h:column>
+
+                        <f:facet name="header">
+
+                            Größe
+
+                        </f:facet>
+
+                        #{netz.size}
+
+                    </h:column>
+
+                    <h:column>
+
+                        <f:facet name="header">
+
+                            Status
+
+                        </f:facet>
+
+                        #{ghostNetBean.getStatusText(netz)}
+
+                    </h:column>
+
+                    <h:column>
+
+                        <f:facet name="header">
+
+                            Aktion
+
+                        </f:facet>
+
+                        <div class="actions">
+
+                            <h:commandButton
+                                    value="Für Bergung eintragen"
+                                    action="#{ghostNetBean.bergungUebernehmen}"
+                                    rendered="#{ghostNetBean.kannBergungUebernehmen(netz)}"
+                                    styleClass="button">
+
+                                <f:setPropertyActionListener
+                                        target="#{ghostNetBean.ausgewaehltesNetz}"
+                                        value="#{netz}" />
+
+                            </h:commandButton>
+
+                            <h:commandButton
+                                    value="Als geborgen melden"
+                                    action="#{ghostNetBean.alsGeborgenMelden}"
+                                    rendered="#{ghostNetBean.kannGeborgenMelden(netz)}"
+                                    styleClass="button">
+
+                                <f:setPropertyActionListener
+                                        target="#{ghostNetBean.ausgewaehltesNetz}"
+                                        value="#{netz}" />
+
+                            </h:commandButton>
+
+                            <h:commandButton
+                                    value="Als verschollen melden"
+                                    action="#{ghostNetBean.alsVerschollenMelden}"
+                                    styleClass="button">
+
+                                <f:setPropertyActionListener
+                                        target="#{ghostNetBean.ausgewaehltesNetz}"
+                                        value="#{netz}" />
+
+                            </h:commandButton>
+
+                        </div>
+
+                    </h:column>
+
+                </h:dataTable>
+
+                <h:link
+                        value="← Zurück zur Startseite"
+                        outcome="index.xhtml"
+                        styleClass="back" />
+
+            </h:form>
+
+        </div>
+
+        <div class="footer">
+
+            Ghost Net Fishing – Prototyp
+
+        </div>
+
+    </div>
+
+</h:body>
+
+</html>

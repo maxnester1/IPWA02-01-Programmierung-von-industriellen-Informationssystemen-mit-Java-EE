@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+
+    <title>Ghost Net Fishing</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #eef4f8;
+            color: #1f2933;
+        }
+
+        .header {
+            background-color: #0b3954;
+            color: white;
+            padding: 22px 40px;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            color: #c9dce8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .form-section {
+            background-color: white;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .form-section h2 {
+            margin-top: 0;
+            color: #0b3954;
+        }
+
+        .form-info {
+            color: #52616b;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            width: 180px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"] {
+            padding: 10px 11px;
+            border: 1px solid #c5cdd3;
+            border-radius: 5px;
+            width: 260px;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #0b6e99;
+        }
+
+        .hint {
+            display: block;
+            margin-top: 4px;
+            color: #71808c;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .error {
+            display: block;
+            margin-top: 6px;
+            color: #b42318;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        .contact-section {
+            background-color: #f3f7fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .contact-section h3 {
+            margin-top: 0;
+            color: #0b3954;
+        }
+
+        .contact-section p {
+            color: #52616b;
+            margin-bottom: 20px;
+        }
+
+        .contact-fields {
+            display: flex;
+            gap: 25px;
+        }
+
+        .contact-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-field label {
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 18px;
+            background-color: #0b6e99;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .button:hover {
+            background-color: #095a7d;
+        }
+
+        .bergung-section {
+            background-color: white;
+            padding: 30px 35px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .bergung-section h2 {
+            margin-top: 0;
+            color: #0b3954;
+        }
+
+        .bergung-section p {
+            color: #52616b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #71808c;
+            font-size: 13px;
+        }
+
+    </style>
+
+</h:head>
+
+<h:body>
+
+    <div class="header">
+
+        <div class="header-content">
+
+            <h1>Ghost Net Fishing</h1>
+
+            <p>
+                Geisternetze melden und Bergungen koordinieren
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="form-section">
+
+            <h2>Geisternetz melden</h2>
+
+            <p class="form-info">
+                Bitte gib die GPS-Koordinaten und die geschätzte Größe
+                des Geisternetzes an.
+            </p>
+
+            <h:form id="meldenForm">
+
+                <div class="input-group">
+
+                    <h:outputLabel
+                        for="latitude"
+                        value="Breitengrad:" />
+
+                    <h:inputText
+                        id="latitude"
+                        value="#{ghostNetBean.ghostNet.latitude}"
+                        required="true"
+                        requiredMessage="Bitte einen Breitengrad eingeben."
+                        validatorMessage="Der Breitengrad muss zwischen -90 und 90 liegen.">
+
+                        <f:validateDoubleRange
+                            minimum="-90"
+                            maximum="90" />
+
+                    </h:inputText>
+
+                    <span class="hint">
+                        Beispiel: 50.775
+                    </span>
+
+                    <h:message
+                        for="latitude"
+                        styleClass="error"
+                        showSummary="false"
+                        showDetail="true" />
+
+                </div>
+
+                <div class="input-group">
+
+                    <h:outputLabel
+                        for="longitude"
+                        value="Längengrad:" />
+
+                    <h:inputText
+                        id="longitude"
+                        value="#{ghostNetBean.ghostNet.longitude}"
+                        required="true"
+                        requiredMessage="Bitte einen Längengrad eingeben."
+                        validatorMessage="Der Längengrad muss zwischen -180 und 180 liegen.">
+
+                        <f:validateDoubleRange
+                            minimum="-180"
+                            maximum="180" />
+
+                    </h:inputText>
+
+                    <span class="hint">
+                        Beispiel: 6.083
+                    </span>
+
+                    <h:message
+                        for="longitude"
+                        styleClass="error"
+                        showSummary="false"
+                        showDetail="true" />
+
+                </div>
+
+                <div class="input-group">
+
+                    <h:outputLabel
+                        for="size"
+                        value="Geschätzte Größe:" />
+
+                    <h:inputText
+                        id="size"
+                        value="#{ghostNetBean.ghostNet.size}"
+                        required="true"
+                        requiredMessage="Bitte eine geschätzte Größe eingeben."
+                        converterMessage="Bitte gib die Größe als gültige Zahl ein." />
+
+                    <span class="hint">
+                        Beispiel: 10.5 Meter
+                    </span>
+
+                    <h:message
+                        for="size"
+                        styleClass="error"
+                        showSummary="false"
+                        showDetail="true" />
+
+                </div>
+
+                <div class="contact-section">
+
+                    <h3>Kontaktdaten</h3>
+
+                    <p>
+                        Optional – das Geisternetz kann auch anonym gemeldet werden.
+                    </p>
+
+                    <div class="contact-fields">
+
+                        <div class="contact-field">
+
+                            <h:outputLabel
+                                for="meldendeName"
+                                value="Name:" />
+
+                            <h:inputText
+                                id="meldendeName"
+                                value="#{ghostNetBean.meldendeName}"
+                                validatorMessage="Der Name darf keine Zahlen enthalten.">
+
+                                <f:validateRegex
+                                    pattern="^[A-Za-zÄÖÜäöüß\s\-]*$" />
+
+                            </h:inputText>
+
+                            <h:message
+                                for="meldendeName"
+                                styleClass="error"
+                                showSummary="false"
+                                showDetail="true" />
+
+                        </div>
+
+                        <div class="contact-field">
+
+                            <h:outputLabel
+                                for="meldendeTelefon"
+                                value="Telefonnummer:" />
+
+                            <h:inputText
+                                id="meldendeTelefon"
+                                value="#{ghostNetBean.meldendeTelefon}"
+                                validatorMessage="Die Telefonnummer darf nur Zahlen enthalten.">
+
+                                <f:validateRegex
+                                    pattern="^[0-9+\-\s()]*$" />
+
+                            </h:inputText>
+
+                            <h:message
+                                for="meldendeTelefon"
+                                styleClass="error"
+                                showSummary="false"
+                                showDetail="true" />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <h:commandButton
+                    value="Geisternetz melden"
+                    action="#{ghostNetBean.speichern}"
+                    styleClass="button" />
+
+            </h:form>
+
+        </div>
+
+        <div class="bergung-section">
+
+            <h2>Geisternetze zur Bergung</h2>
+
+            <p>
+                Zeige gemeldete Geisternetze an und trage dich
+                als bergende Person für eine Bergung ein.
+            </p>
+
+            <h:form>
+
+                <h:commandButton
+                    value="Zur Bergungsübersicht"
+                    action="bergung.xhtml?faces-redirect=true"
+                    styleClass="button" />
+
+            </h:form>
+
+        </div>
+
+        <div class="footer">
+
+            Ghost Net Fishing – Prototyp
+
+        </div>
+
+    </div>
+
+</h:body>
+
+</html>
